@@ -24,7 +24,7 @@ export default class PanelMenuExtension extends Extension {
                 const indicator = new Panelmenu(item.name, item.icon, this.config);
                 this._indicators.push(indicator);
                 
-                Main.panel.addToStatusArea(item.name, indicator);
+                Main.panel.addToStatusArea("panel-menu_" + item.name, indicator);
             }
         } catch (e) {
             console.log(e);
@@ -32,9 +32,10 @@ export default class PanelMenuExtension extends Extension {
     }
     
     disable() {
-        this._indicator.destroy();
-        this._indicator = null;
-        Main.panel._rdpindicator = null;
+        for (let i = 0; i < this._indicators.length; i++) {
+            const indicator = this._indicators[i];
+        indicator.destroy();
+        }
     }
 }
 
