@@ -1,0 +1,34 @@
+[
+    {
+      "name": "ssh",
+      "icon": "view-more-horizontal-symbolic",
+      "menu": [
+          {
+            "title": "user@server1.example.com",
+            "command": "kgx --command='ssh user@server1.example.com'",
+            "icon": "utilities-terminal"
+          },
+          {
+            "title": "user@server2.example.com",
+            "command": "kgx --command='ssh user@server2.example.com'",
+            "icon": "utilities-terminal"
+          }
+      ]
+    },
+    {
+      "name": "menu1", 
+      "icon": "go-down",
+      "menu": [
+          {
+              "title": "Title 1",
+              "command": "command1",
+              "icon": "folder-symbolic"
+          },
+          {
+              "title": "Title 2",
+              "command": "df -h",
+              "icon": "channel-secure-symbolic"
+          }
+      ]
+    }
+]
