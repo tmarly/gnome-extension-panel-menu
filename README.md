@@ -4,7 +4,7 @@
 Inspired by SSHMenu and Command Menu, this extension offers the possibility to add several custom menus to the Gnome Panel.
 
 ### Installation
-<a href="">
+<a href="https://extensions.gnome.org/extension/6877/astrapios-panel-menu/">
 <img src="https://github.com/andyholmes/gnome-shell-extensions-badge/raw/master/get-it-on-ego.svg" alt="Get it on EGO" width="200" />
 </a>
 
