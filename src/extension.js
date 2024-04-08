@@ -17,12 +17,12 @@ export default class PanelMenuExtension extends Extension {
 
     enable() {
         this.menuInstance = new panelMenu();
-        this.menuInstance.create(this);
+        this.menuInstance.create();
     }
 
     disable() {
         if (this.menuInstance) {
-            this.menuInstance.destroy(this);
+            this.menuInstance.destroy();
             this.menuInstance = null;
         }
     }
