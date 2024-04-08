@@ -29,21 +29,27 @@ export default class PanelMenuExtension extends Extension {
 }
 
 class panelMenu {
-    create(context) {
+    create() {
         console.log("panelMenu->create")
-        this.context = context;
+        this.json = null;
+        this._indicators = null;
+
         try {
             const filePath = ".menu.json";
             const file = Gio.file_new_for_path(GLib.get_home_dir() + "/" + filePath);
 
             const [ok, contents, _] = file.load_contents(null);
-            this.context.json = JSON.parse(contents);
+            
+            const decoder = new TextDecoder('utf-8');
+            const contentsString = decoder.decode(contents);
+            
+            this.json = JSON.parse(contentsString);
 
-            this.context._indicators = [];
+            this._indicators = [];
 
-            for (const item of this.context.json) {
-                const indicator = new panelMenuButton(item.name, item.icon, this.context);
-                this.context._indicators.push(indicator);
+            for (const item of this.json) {
+                const indicator = new panelMenuButton(item.name, item.icon, this.json);
+                this._indicators.push(indicator);
 
                 Main.panel.addToStatusArea("panel-menu_" + item.name, indicator);
             }
@@ -52,19 +58,18 @@ class panelMenu {
         }
     }
 
-    destroy(context) {
+    destroy() {
         console.log("panelMenu->destroy")
-        this.context = context;
-        for (let i = 0; i < this.context._indicators.length; i++) {
-            const indicator = this.context._indicators[i];
+        for (let i = 0; i < this._indicators.length; i++) {
+            const indicator = this._indicators[i];
             indicator.destroy();
         }
     }
 
-    reload(context) {
+    reload() {
         console.log("panelMenu->reload")
-        this.destroy(context)
-        this.create(context)
+        this.destroy()
+        this.create()
     }
 
     addMenuItem(menu, title, icon, command) {
@@ -110,11 +115,11 @@ const panelMenuButton = GObject.registerClass(
     {
     },
     class panelMenuButton extends PanelMenu.Button {
-        _init(name, icon, context) {
+        _init(name, icon, json) {
             super._init(0, 'server');
-            this.context = context
             this.icon = icon;
             this.name = name;
+            this.json = json;
             this.menuInstance = 
 
             this.items = [];
@@ -128,7 +133,7 @@ const panelMenuButton = GObject.registerClass(
             menuBox.add_child(menuIcon);
             this.add_child(menuBox);
 
-            const menuItems = context.json.find(item => item.name === this.name);
+            const menuItems = this.json.find(item => item.name === this.name);
             if (menuItems) {
                 this._createItems(menuItems.menu);
             } else {
@@ -156,7 +161,7 @@ const panelMenuButton = GObject.registerClass(
                             var self = this;
                             this.panelSubMenu = new PopupMenu.PopupSubMenuMenuItem(menuItem.title);
 
-                            this.context.json.forEach(function (item) {
+                            this.json.forEach(function (item) {
                                 if (item.menu) {
                                     item.menu.forEach(function (subMenu) {
                                         if (subMenu.type === "submenu" && subMenu.submenu && menuItem.name == subMenu.name) {
