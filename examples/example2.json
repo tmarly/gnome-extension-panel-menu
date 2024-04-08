@@ -20,14 +20,17 @@
       "icon": "go-down",
       "menu": [
           {
-              "title": "Title 1",
+              "title": "Command 1",
               "command": "command1",
               "icon": "folder-symbolic"
           },
           {
-              "title": "Title 2",
+              "title": "Command 2",
               "command": "df -h",
               "icon": "channel-secure-symbolic"
+          },
+          {
+              "type": "reload"
           }
       ]
     }

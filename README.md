@@ -4,60 +4,32 @@
 Inspired by SSHMenu and Command Menu, this extension offers the possibility to add several custom menus to the Gnome Panel.
 
 ### Installation
+#### One-click install
 <a href="https://extensions.gnome.org/extension/6877/astrapios-panel-menu/">
 <img src="https://github.com/andyholmes/gnome-shell-extensions-badge/raw/master/get-it-on-ego.svg" alt="Get it on EGO" width="200" />
 </a>
 
-### Example 1 ~/.menu.json
+#### Manual install
+To install, simply download as zip and unzip contents in ~/.local/share/gnome-shell/extensions/panel-menu@astrapi.os
 
-```
-[
-  {
-    "name": "ssh",
-    "icon": "view-more-horizontal-symbolic",
-    "menu": [
-      {
-        "title": "user@server1.example.com",
-        "command": "kgx --command='ssh user@server1.example.com'",
-        "icon": "utilities-terminal"
-      },
-      {
-        "type": "seperator"
-      },
-      {
-        "title": "user@server2.example.com",
-        "command": "kgx --command='ssh user@server2.example.com'",
-        "icon": "utilities-terminal"
-      }
-    ]
-  }
-]
-```
-![screenshot](<screenshot.png>)
+### Supports
 
-### Example 2 ~/.submenu.json
+* Multiple menus 
+* Submenus ( versions >= 4 )
+* Reload button ( versions >= 4 )
+* Seperator ( versions >= 4 )
 
-```
-[
-  {
-    "name": "ssh",
-    "icon": "view-more-horizontal-symbolic",
-    "menu": [
-        {
-          "title": "user@server1.example.com",
-          "command": "kgx --command='ssh user@server1.example.com'",
-          "icon": "utilities-terminal"
-        },
-        {
-          "title": "user@server2.example.com",
-          "command": "kgx --command='ssh user@server2.example.com'",
-          "icon": "utilities-terminal"
-        }
-    ]
-  }
-]
-```
-![screenshot](<screenshot.png>)
+### example1.json
+
+![screenshot](<example1.png>)
+
+### example2.json
+
+![screenshot](<example2.png>)
+
+### example3.json
+
+![screenshot](<example3.png>)
 
 ### Icons
 
