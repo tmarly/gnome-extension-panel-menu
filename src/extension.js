@@ -10,12 +10,21 @@ import * as PopupMenu from 'resource:///org/gnome/shell/ui/popupMenu.js';
 import { Extension, gettext as _ } from 'resource:///org/gnome/shell/extensions/extension.js';
 
 export default class PanelMenuExtension extends Extension {
+    constructor(metadata) {
+        super(metadata);
+        this.menuInstance = null;
+    }
+
     enable() {
-        new panelMenu().create(this);
+        this.menuInstance = new panelMenu();
+        this.menuInstance.create(this);
     }
 
     disable() {
-        new panelMenu().destroy(this);
+        if (this.menuInstance) {
+            this.menuInstance.destroy(this);
+            this.menuInstance = null;
+        }
     }
 }
 
@@ -65,19 +74,19 @@ class panelMenu {
         this.icon = icon;
 
         if (this.icon) {
-            this.refreshButton = new PopupMenu.PopupImageMenuItem(
+            this.menuButton = new PopupMenu.PopupImageMenuItem(
                 this.title,
                 this.icon
             );
         } else {
-            this.refreshButton = new PopupMenu.PopupMenuItem(this.title);
+            this.menuButton = new PopupMenu.PopupMenuItem(this.title);
         }
 
-        this.refreshButton.label.x_expand = true;
-        this.refreshButton.connect('activate', () => {
+        this.menuButton.label.x_expand = true;
+        this.menuButton.connect('activate', () => {
             GLib.spawn_command_line_async(this.command);
         });
-        menu.addMenuItem(this.refreshButton);
+        menu.addMenuItem(this.menuButton);
     }
 
     addReloadItem(context, menu) {
@@ -106,6 +115,7 @@ const panelMenuButton = GObject.registerClass(
             this.context = context
             this.icon = icon;
             this.name = name;
+            this.menuInstance = 
 
             this.items = [];
             this._folders = {};
@@ -132,14 +142,15 @@ const panelMenuButton = GObject.registerClass(
         }
 
         _createItems(menuItems) {
+            this.menuInstance = new panelMenu();
             for (const menuItem of menuItems) {
                 if (menuItem.type) {
                     switch (menuItem.type) {
                         case "seperator":
-                            new panelMenu().addSeparatorMenuItem(this.menu);
+                            this.menuInstance.addSeparatorMenuItem(this.menu);
                             break;
                         case "reload":
-                            new panelMenu().addReloadItem(this.context, this.menu);
+                            this.menuInstance.addReloadItem(this.context, this.menu);
                             break;
                         case "submenu":
                             var self = this;
@@ -151,7 +162,7 @@ const panelMenuButton = GObject.registerClass(
                                         if (subMenu.type === "submenu" && subMenu.submenu && menuItem.name == subMenu.name) {
                                             console.log(menuItem.name);
                                             subMenu.submenu.forEach(function (subMenuItem) {
-                                                new panelMenu().addMenuItem(self.panelSubMenu.menu, subMenuItem.title, subMenuItem.icon, subMenuItem.command);
+                                                self.menuInstance.addMenuItem(self.panelSubMenu.menu, subMenuItem.title, subMenuItem.icon, subMenuItem.command);
                                             });
                                         }
                                     });
@@ -162,7 +173,7 @@ const panelMenuButton = GObject.registerClass(
                     }
                 }
                 else {
-                    new panelMenu().addMenuItem(this.menu, menuItem.title, menuItem.icon, menuItem.command);
+                    this.menuInstance.addMenuItem(this.menu, menuItem.title, menuItem.icon, menuItem.command);
                 }
             }
         }
