@@ -1,16 +1,21 @@
+### This is a fork from https://gitlab.com/astrapi-os/shell-extensions/panel-menu
+
+Changes in this fork:
+- allow separator in submenus
+
 ## Your own menu for the Gnome Panel
 
 ### Description
 Inspired by SSHMenu and Command Menu, this extension offers the possibility to add several custom menus to the Gnome Panel.
 
 ### Installation
-#### One-click install
-<a href="https://extensions.gnome.org/extension/6877/astrapios-panel-menu/">
-<img src="https://github.com/andyholmes/gnome-shell-extensions-badge/raw/master/get-it-on-ego.svg" alt="Get it on EGO" width="200" />
-</a>
 
-#### Manual install
 To install, simply download as zip and unzip contents in ~/.local/share/gnome-shell/extensions/panel-menu@astrapi.os
+
+Then:
+```
+gnome-extensions enable panel-menu@astrapi.os
+```
 
 ### Supports
 
