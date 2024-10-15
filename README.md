@@ -10,12 +10,9 @@ Inspired by SSHMenu and Command Menu, this extension offers the possibility to a
 
 ### Installation
 
-To install, simply download as zip and unzip contents in ~/.local/share/gnome-shell/extensions/panel-menu@astrapi.os
+To install, copy the contents of the "src" folder to ~/.local/share/gnome-shell/extensions/panel-menu@astrapi.os
 
-Then:
-```
-gnome-extensions enable panel-menu@astrapi.os
-```
+Then restart gnome: alt-F2 + r
 
 ### Supports
 

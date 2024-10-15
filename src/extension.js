@@ -81,7 +81,6 @@ class panelMenu {
     addMenuItem(menu, title, icon, command) {
         this.menu = menu;
         this.title = title;
-        this.command = command;
         this.icon = icon;
 
         if (this.icon) {
@@ -95,7 +94,7 @@ class panelMenu {
 
         this.menuButton.label.x_expand = true;
         this.menuButton.connect('activate', () => {
-            GLib.spawn_command_line_async(this.command);
+            GLib.spawn_command_line_async(command);
         });
         menu.addMenuItem(this.menuButton);
     }
