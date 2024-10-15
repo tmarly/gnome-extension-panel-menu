@@ -17,18 +17,20 @@ export default class PanelMenuExtension extends Extension {
 
     enable() {
         this.menuInstance = new panelMenu();
-        this.menuInstance.create();
+        this.menuInstance.create(this);
     }
 
     disable() {
         if (this.menuInstance) {
-            this.menuInstance.destroy();
+            this.menuInstance.destroy(this);
             this.menuInstance = null;
         }
     }
 }
 
 class panelMenu {
+    
+    
     create() {
         console.log("panelMenu->create")
         this.json = null;
@@ -59,10 +61,14 @@ class panelMenu {
     }
 
     destroy() {
-        console.log("panelMenu->destroy")
-        for (let i = 0; i < this._indicators.length; i++) {
-            const indicator = this._indicators[i];
-            indicator.destroy();
+        console.log("panelMenu->destroy");
+        if (typeof this._indicators !== 'undefined' && this._indicators !== null) {
+            console.log("panelMenu->destroy indicators");
+            for (let i = 0; i < this._indicators.length; i++) {
+                console.log("panelMenu->destroy indicator n°" + i);
+                const indicator = this._indicators[i];
+                indicator.destroy();
+            }
         }
     }
 
@@ -167,7 +173,12 @@ const panelMenuButton = GObject.registerClass(
                                         if (subMenu.type === "submenu" && subMenu.submenu && menuItem.name == subMenu.name) {
                                             console.log(menuItem.name);
                                             subMenu.submenu.forEach(function (subMenuItem) {
-                                                self.menuInstance.addMenuItem(self.panelSubMenu.menu, subMenuItem.title, subMenuItem.icon, subMenuItem.command);
+                                                if (subMenuItem.type === "seperator") {
+                                                    self.menuInstance.addSeparatorMenuItem(self.panelSubMenu.menu);
+                                                } else {
+
+                                                    self.menuInstance.addMenuItem(self.panelSubMenu.menu, subMenuItem.title, subMenuItem.icon, subMenuItem.command);
+                                                }
                                             });
                                         }
                                     });
